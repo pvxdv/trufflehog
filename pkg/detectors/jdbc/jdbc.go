@@ -67,6 +67,10 @@ func (s Scanner) FromData(ctx context.Context, verify bool, data []byte) (result
 	matches := keyPat.FindAllStringSubmatch(dataStr, -1)
 matchLoop:
 	for _, match := range matches {
+		if strings.Contains(match[0], "localhost") {
+			continue
+		}
+
 		if len(s.ignorePatterns) != 0 {
 			for _, ignore := range s.ignorePatterns {
 				if ignore.MatchString(match[0]) {
